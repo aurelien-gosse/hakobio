@@ -146,6 +146,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+@import url("//cdn.rawgit.com/noelboss/featherlight/1.7.13/release/featherlight.min.css");
+
 div#wave {
     position:relative;
     text-align:left;
