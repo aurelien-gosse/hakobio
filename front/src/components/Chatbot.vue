@@ -13,7 +13,8 @@
           <img alt="Vue logo" src="../assets/logo-hako.png" class="logo-chat">
           <span class="chat-name">hako<span class="orange2">bot</span></span>
         </div>
-        <i class="fas fa-times" @click="closeChat"></i>
+        <img class="fas fa-times" src="@/assets/cross.png" alt="cross" @click="closeChat">
+        <!-- <i class="fas fa-times" @click="closeChat"></i> -->
       </div>
       <!-- champ bulles & questions -->
       <div class="chat-champ">
@@ -58,7 +59,10 @@
         <form action="POST">
           <textarea name="message" id="message" cols="30" rows="5" placeholder="Ask me anything" v-model="questionTmp">
           </textarea>
-          <div class="submit" @click="ask"><i class="fas fa-paper-plane"></i></div>
+          <div class="submit" @click="ask">
+            <img class="fas fa-times plane" src="@/assets/plane.png" alt="plane" >
+            <!-- <i class="fas fa-paper-plane"></i> -->
+            </div>
         </form>
       </div>
     </div>
@@ -192,6 +196,11 @@ div#wave {
   flex-direction: row;
   margin-bottom: 10px;
   transition: .3s all ease-in-out;
+}.fas{
+  width: 15px;
+}
+.plane{
+  width: 20px;
 }
 .bot{
   width: 80px;
