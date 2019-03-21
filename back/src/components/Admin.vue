@@ -11,29 +11,44 @@
     <div class="form-contenu">
       <div class="info">
         <div class="title">
-          New questions/answers
+          questions/answers/status
         </div>
         <div class="q-a">
           <p>Questions</p>
           <p>Answers</p>
+          <p>Status</p>
         </div>
       </div>
       <div class="liste-questions" v-for="(q,index) in questions" :key="index">
-        <form action="post" @submit.prevent="updateQuestion(q.id,q.question,q.answer)">
+        <form action="post" @submit.prevent="updateQuestion(q.id,q.question,q.answer,q.status)">
           <div class="champ">
-          <textarea name="message" v-model="q.question" placeholder="question"></textarea>
-          <textarea name="message" v-model="q.answer" placeholder="answer"></textarea></div>
+            <textarea name="message" v-model="q.question" placeholder="question"></textarea>
+            <textarea name="message" v-model="q.answer" placeholder="answer"></textarea>
+            <textarea class="status" name="message" v-model="q.status" placeholder="status"></textarea>
+          </div>
           <div class="button">
           <button class="submit" type="submit">Update</button>
           <button class="delete" type="button" @click="deleteQuestion(q.id)">Delete</button>
           </div>
         </form>
       </div>
+      <div class="info">
+        <div class="title">
+          New questions/answers/status
+        </div>
+        <div class="q-a">
+          <p>Questions</p>
+          <p>Answers</p>
+          <p>Status</p>
+        </div>
+      </div>
       <div class="new-q">
       <form action="post" @submit.prevent="newQuestion()" class="new-q">
         <div class="champ">
         <textarea name="message" v-model="questionToAdd.question" placeholder="question"></textarea>
-        <textarea name="message" v-model="questionToAdd.answer" placeholder="answer"></textarea> </div>
+        <textarea name="message" v-model="questionToAdd.answer" placeholder="answer"></textarea>
+        <textarea class="status" name="message" v-model="questionToAdd.status" placeholder="status"></textarea>
+        </div>
         <button class="submit" type="submit">New</button>
       </form>
       </div>
@@ -52,18 +67,12 @@ export default {
       questions: [],
       questionToAdd: [{
         answer: "",
-        question: ""
+        question: "",
+        status:""
       }]
     }
   },
   created(){
-    // axios.get("https://ouatapi20190320032743.azurewebsites.net/api/questions")
-    // .then(response => {
-    //   //this.answersTmp = response.data.answer.split('_@_')
-    //   this.questions = response.data
-    //   /*this.answersTmp.forEach((el) => {
-    //   })*/
-    // })
     this.ask()
   },
   props: {
@@ -87,22 +96,13 @@ export default {
         .then(()=>{
           this.ask()
         });
-        
-        // axios.delete("https://ouatapi20190320032743.azurewebsites.net/api/questions?id=" + id,
-        // {
-        //   headers:  {
-        //     "Access-Control-Allow-Origin": "*",
-        //     "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-        //     "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
-        //   }
-        // }).then();
       }
     },
-    updateQuestion(id, question, answer){
-      axios.put("https://ouatapi20190320032743.azurewebsites.net/api/questions", {"id":id,"answer":answer,"question":question}).then();
+    updateQuestion(id, question, answer, status){
+      axios.put("https://ouatapi20190320032743.azurewebsites.net/api/questions", {"id":id,"answer":answer,"question":question, "status":status}).then();
     },
     newQuestion(){
-      axios.post("https://ouatapi20190320032743.azurewebsites.net/api/questions", {"answer":this.questionToAdd.answer,"question":this.questionToAdd.question}).then();
+      axios.post("https://ouatapi20190320032743.azurewebsites.net/api/questions", {"answer":this.questionToAdd.answer,"question":this.questionToAdd.question,"status":this.questionToAdd.status}).then(this.ask);
     }
   }
 }
@@ -117,7 +117,7 @@ export default {
   margin-bottom: 30px;
 }
 .info{
-  width: 1000px;
+  width: 1200px;
 }
 .info .q-a{
   display: flex;
@@ -136,7 +136,7 @@ form{
   margin-bottom: 20px;
   height: 90px;
   border-radius: 3px;
-  width: 1000px;
+  width: 1200px;
   padding: 5px 20px 5px 15px;
 }
 .form-contenu{
@@ -156,12 +156,15 @@ textarea, input{
   background: white;
   border-radius: 5px;
   padding: 10px;
-  width: 270px;
-  height: 65px;
+  width: 250px;
+  height: 70px;
   outline: none;
   font-family: Arial, Helvetica, sans-serif;
   margin: 5px;
   box-sizing: border-box;
+}
+.status{
+  width: 200px;
 }
 button{
   width: 100px;

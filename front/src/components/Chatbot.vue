@@ -44,7 +44,13 @@
           </div>
 
 
-          <div class="bullet bot-bullet" v-if="tmp"><p>...</p></div>
+          <div class="bullet bot-bullet" v-if="tmp">
+            <div id="wave">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+          </div>
 
 
         </div> 
@@ -67,44 +73,17 @@ export default {
   data(){
     return{
       // goodAnswer: '',
-      chatActive: true,
+      chatActive: false,
       tmp: false,
-      //question: "What is hakobio ?",
-      //question: "Where can I find help ?",
-      questionTmp: "How to create a room in HakoBio ?",
+      //questionTmp: "How to create a room in HakoBio ?",
+      questionTmp: "",
       question: "",
       answersTmp: [],
       answers: [],
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'EndpointKey 9525cf67-ed6d-4124-8b25-56e3248fa1f7' 
-      },
-      fakeAnswer: [
-        {
-          text: 'My question 1',
-          type: 'Q'
-        },
-        {
-          text: 'My answer 1',
-          type: 'A'
-        },
-        {
-          text: 'My question 2',
-          type: 'Q'
-        },
-        {
-          text: 'My answer 2.1',
-          type: 'A'
-        },
-        {
-          text: 'My answer 2.2',
-          type: 'A'
-        },
-        {
-          text: 'My answer 2.3',
-          type: 'A'
-        }
-      ]
+      }
     }
   },
   created(){
@@ -114,11 +93,6 @@ export default {
     msg: String
   },
   methods:{
-    // post(){
-    //   this.$nextTick(() => {
-    //       this.scrollToEnd();
-    //     })
-    // },
     activeChat(){
       this.chatActive = true;
     },
@@ -129,7 +103,6 @@ export default {
       this.$nextTick(() => {
           this.scrollToEnd();
         })
-
 
       // this.question = this.questions
       this.question = this.questionTmp
@@ -147,7 +120,6 @@ export default {
         //this.answersTmp = response.data.answers[0].answer.split('_@_')
         this.answersTmp = response.data.answer.split('_@_')
         this.answersTmp.forEach((el) => {
-
           if(/(http(s?):)([/|.|\w|%|-])*/i.test(el)){
             if(/(http(s?):)([/|.|\w|\s|%|-])*\.(?:jpg|gif|png|jpeg|svg)/i.test(el)){
               this.answers.push({text:el, type: 'I'})
@@ -157,10 +129,6 @@ export default {
           }else{
             this.answers.push({text:el, type: 'A'})
           }
-
-
-
-
         })
         this.$nextTick(() => {
           this.scrollToEnd();
@@ -178,6 +146,34 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
+div#wave {
+    position:relative;
+    text-align:left;
+    margin-left: 10px;
+}
+.dot {
+  display:inline-block;
+  width:3px;
+  height:3px;
+  border-radius:100%;
+  margin-right:3px;
+  background:#303131;
+  animation: wave 1.3s linear infinite;
+}
+.dot:nth-child(2) {
+  animation-delay: -1.1s;
+}
+.dot:nth-child(3) {
+  animation-delay: -0.9s;
+}
+@keyframes wave {
+    0%, 60%, 100% {
+        transform: initial;
+    }
+    30% {
+        transform: translateY(-10px);
+    }
+}
 #chat{
   position: fixed;
   right: 0;
